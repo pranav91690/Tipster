@@ -12,6 +12,8 @@
 		819069311C39FBAD0065637E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8190692F1C39FBAD0065637E /* Main.storyboard */; };
 		819069331C39FBAD0065637E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 819069321C39FBAD0065637E /* Assets.xcassets */; };
 		819069361C39FBAD0065637E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 819069341C39FBAD0065637E /* LaunchScreen.storyboard */; };
+		819069421C3A31490065637E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819069411C3A31490065637E /* SettingsViewController.swift */; };
+		819069441C3A3BFE0065637E /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819069431C3A3BFE0065637E /* UserSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		819069321C39FBAD0065637E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		819069351C39FBAD0065637E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		819069371C39FBAD0065637E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		819069411C3A31490065637E /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		819069431C3A3BFE0065637E /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				819069321C39FBAD0065637E /* Assets.xcassets */,
 				819069341C39FBAD0065637E /* LaunchScreen.storyboard */,
 				819069371C39FBAD0065637E /* Info.plist */,
+				819069411C3A31490065637E /* SettingsViewController.swift */,
+				819069431C3A3BFE0065637E /* UserSettings.swift */,
 			);
 			path = tipster;
 			sourceTree = "<group>";
@@ -136,7 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8190692E1C39FBAD0065637E /* ViewController.swift in Sources */,
+				819069441C3A3BFE0065637E /* UserSettings.swift in Sources */,
 				8190692C1C39FBAD0065637E /* AppDelegate.swift in Sources */,
+				819069421C3A31490065637E /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
