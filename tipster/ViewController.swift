@@ -13,18 +13,43 @@ class ViewController: UIViewController {
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var billField: UITextField!
-    
+    @IBOutlet weak var splitAmountLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var CountStepper: UIStepper!
+    @IBOutlet weak var bottomRightView: UIView!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var topView: UIView!
+    
     var userSettings: UserSettings!
     var changedFirstTime = false
     var firstScreenLoad = false
     var startTime = NSDate()
+    var cleanSlate = false
+    var tipGlobal = 0.0
+    var inStage1 = false
+    var inOriginalStage = false
+
+    
+    @IBAction func stepperValueChanged(sender: UIStepper) {
+        calSplit(Int(sender.value))
+    }
+    
+    func calSplit(people : Int){
+        countLabel.text = people.description
+        splitAmountLabel.text = String(format: "$%.2f", tipGlobal/Double(people))
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.title = "Tipster"
+        
+        CountStepper.wraps = true
+        CountStepper.autorepeat = true
+        CountStepper.maximumValue = 4
+        CountStepper.minimumValue = 1
+        
+        splitAmountLabel.text = "S0.00"
         
         print("viewDidLoad")
         
@@ -34,7 +59,8 @@ class ViewController: UIViewController {
         if(timeStamp != nil){
             // Check the elapsed time and see if it is less than 10 mins
             let elapsedTime = NSDate().timeIntervalSinceDate(timeStamp as! NSDate)
-            if(elapsedTime < 20){
+            if(elapsedTime < 10){
+                // If yes, set the bill amount with the saved value
                 changedFirstTime = true
                 firstScreenLoad = true
                 // Get the Previously Stored Value
@@ -42,8 +68,8 @@ class ViewController: UIViewController {
 
                 // Update the Bill Amount ans set the Tip
                 billField.text = String(format: "%.2f", billAmount)
-                reload()
-                animate()
+                
+                animateOriginalStage()
             }
         }
 
@@ -60,28 +86,49 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipPercentageSegment: UISegmentedControl!
     
     @IBAction func onEditingChanged(sender: AnyObject) {
-        if(!changedFirstTime){
-            changedFirstTime = true
-            animate()
-            // Get the Fields in bound now
-            self.tipPercentageSegment.center.x += self.view.bounds.width
-            self.bottomView.center.x += self.view.bounds.width
-        }
-        
         // Store the Value
         setTip()
     }
     
-    func animate(){
-        // Animation Code goes here!!
-        UIView.animateWithDuration(0.7, animations: {
-            var topFrame = self.topView.frame
-            topFrame.origin.y -= topFrame.size.height
+    func animateStage1(){
+        inStage1 = true
+        if(inOriginalStage){
+            inOriginalStage = false
+            // Animation Code goes here!!
+            UIView.animateWithDuration(0.7, animations: {
+                var topFrame = self.topView.frame
+                topFrame.origin.y -= topFrame.size.height
+                
+                self.topView.frame = topFrame
+                },completion: { finished in
+                    print("Animation Completed")
+            })
             
-            self.topView.frame = topFrame
-            },completion: { finished in
-                print("Animation Completed")
-        })
+            // Make the Out of Bound Fields in bound now
+            self.tipPercentageSegment.center.x += self.view.bounds.width
+            self.bottomView.center.x += self.view.bounds.width
+            self.bottomRightView.center.x += self.view.bounds.width
+        }
+    }
+    
+    func animateOriginalStage(){
+        inOriginalStage = true
+        if(inStage1){
+            inStage1 = false
+            UIView.animateWithDuration(0.7, animations: {
+                var topFrame = self.topView.frame
+                topFrame.origin.y += topFrame.size.height
+                
+                self.topView.frame = topFrame
+                },completion: { finished in
+                    print("Animation Completed")
+            })
+        }
+        
+        // make the fields out of bound
+        tipPercentageSegment.center.x -= view.bounds.width
+        bottomView.center.x -= view.bounds.width
+        bottomRightView.center.x -= view.bounds.width
     }
     
     @IBAction func onTap(sender: AnyObject) {
@@ -93,6 +140,9 @@ class ViewController: UIViewController {
         let tipPercentage = tipPercentages[tipPercentageSegment.selectedSegmentIndex]
         
         if(billField.text != ""){
+            // Get to Texting Stage
+            animateStage1()
+            
             let billAmount = Double(billField.text!)!
             let tip = billAmount * tipPercentage
             let total = billAmount + tip
@@ -100,19 +150,17 @@ class ViewController: UIViewController {
             tipLabel.text = String(format: "$%.2f", tip)
             totalLabel.text = String(format: "$%.2f", total)
             
+            tipGlobal = tip
+            
+            calSplit(Int(countLabel.text!)!)
+            
             // Store the bill amount in a variable
             let defualts = NSUserDefaults.standardUserDefaults()
             defualts.setDouble(billAmount, forKey: "billAmount")
             defualts.synchronize()
         }else{
-            let tip = 0
-            let total = 0
-            
-            tipLabel.text = "$\(tip)"
-            totalLabel.text = "$\(total)"
-            
-            tipLabel.text = String(format: "$%.2f", tip)
-            totalLabel.text = String(format: "$%.2f", total)
+            // Get Back to Original Stage
+            animateOriginalStage()
         }
     }
     
@@ -129,18 +177,17 @@ class ViewController: UIViewController {
         
         print("View Will Appear")
         
-        // Take all fields except the text field out bounds
-        if(!firstScreenLoad){
-            firstScreenLoad = true
-            tipPercentageSegment.center.x -= view.bounds.width
-            bottomView.center.x -= view.bounds.width
-        }
-        
         // Make the bill amount field the first responder
         billField.becomeFirstResponder()
         // Reload the UserDefault Values
         reload()
     }
+    
+    func hideFields(){
+        tipPercentageSegment.center.x -= view.bounds.width
+        bottomView.center.x -= view.bounds.width
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         print("View Did Appear")

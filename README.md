@@ -19,8 +19,7 @@ The following **optional** features are implemented:
 * [X] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
 The following **additional** features are implemented:
-
-- [ ] List anything else that you can get done to improve the app functionality!
+- [X] Ability to split the tip 4 ways
 
 ## Video Walkthrough 
 
@@ -31,6 +30,13 @@ Here's a walkthrough of implemented user stories:
 <img src='http://i.imgur.com/IbWCZxq.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
+Here's an improved version:
+* UI animations as the user enters a bill amount, accesiing the settings page to change the default bill percentages
+* The bill amount being the first responder
+* Background Color
+* Feature to split the tip upto 4 ways
+<img src='http://i.imgur.com/0iUo2ve.gif' title='Improved Version' width='' alt='Video Walkthrough' />
 
 ## Notes
 
