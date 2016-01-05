@@ -28,7 +28,7 @@ Here's a walkthrough of implemented user stories:
 * UI animations as the user enters a bill amount, accesiing the settings page to change the default bill percentages
 * The bill amount being the first responder
 
-<img src='https://imgur.com/IbWCZxq' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/IbWCZxq.gifv' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
