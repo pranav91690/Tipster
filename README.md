@@ -31,12 +31,17 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
+## Improved Version
+
 Here's an improved version:
 * UI animations as the user enters a bill amount, accesiing the settings page to change the default bill percentages
 * The bill amount being the first responder
 * Background Color
 * Feature to split the tip upto 4 ways
+
 <img src='http://i.imgur.com/0iUo2ve.gif' title='Improved Version' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
